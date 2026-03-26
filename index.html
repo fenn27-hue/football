@@ -3,33 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live UK Football Scores</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Football</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>⚽ Live UK Football Scores</h1>
-            <p class="subtitle">Premier League • Championship • League One • League Two</p>
-        </header>
-
-        <div class="filters">
-            <label for="league-filter">Filter by League:</label>
-            <select id="league-filter">
-                <option value="all">All UK Leagues</option>
-                <option value="PL">Premier League</option>
-                <option value="ELC">Championship</option>
-                <option value="EL1">League One</option>
-                <option value="EL2">League Two</option>
-            </select>
-            <span id="last-updated">Last updated: --:--</span>
-        </div>
-
-        <div id="matches-container" class="matches-container">
-            <p class="loading">Loading matches...</p>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+    <header>
+        <h1>Football Association</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Teams</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="form-section">
+            <h2>Join the Team</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section class="info-section">
+            <h2>Latest News</h2>
+            <article>
+                <h3>New Season Kicks Off!</h3>
+                <p>Join us for an exciting new season of football!</p>
+            </article>
+            <article>
+                <h3>Player Signings</h3>
+                <p>Check out the latest player signings!</p>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Football Association. All rights reserved.</p>
+    </footer>
 </body>
 </html>
