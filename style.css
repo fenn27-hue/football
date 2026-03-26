@@ -1,53 +1,30 @@
-.live-scores {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-}
-
 .score-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin: 15px;
-  width: calc(33% - 30px);
-  overflow: hidden;
-  transition: transform 0.2s;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.score-card:hover {
-  transform: scale(1.05);
+.score-card h2 {
+    font-size: 24px;
+    color: #2980b9;
+    text-align: center;
 }
 
-.card-header {
-  background-color: #007bff;
-  color: #fff;
-  padding: 15px 20px;
-  font-size: 1.25em;
+.score-card .team {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
 }
 
-.card-body {
-  padding: 15px;
+.score-card .team h3 {
+    font-size: 20px;
+    color: #34495e;
 }
 
-.team-name {
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
-.score {
-  font-size: 2em;
-  color: #28a745;
-}
-
-@media (max-width: 768px) {
-  .score-card {
-    width: calc(50% - 30px);
-  }
-}
-
-@media (max-width: 480px) {
-  .score-card {
-    width: 100%;
-  }
+.score-card .score {
+    font-size: 22px;
+    color: #c0392b;
+    font-weight: bold;
 }
