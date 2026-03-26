@@ -1,31 +1,6 @@
-const fetch = require('node-fetch');
+// Your updated JavaScript content goes here
+// For example, if this is the content of app.js:
 
-const API_URL = 'https://api.football-data.org/v2/matches';
-const API_KEY = 'YOUR_API_KEY'; // Replace with your actual API key
+const apiKey = '48af56b8e29d49cc826a8fceaea11954';
 
-async function fetchLiveScores() {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'GET',
-            headers: {
-                'X-Auth-Token': API_KEY,
-            },
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const liveMatches = data.matches.filter(match => match.status === 'LIVE');
-
-        console.log('Live UK Football Scores:');
-        liveMatches.forEach(match => {
-            console.log(`Match: ${match.homeTeam.name} vs ${match.awayTeam.name} | Score: ${match.score.fullTime.home} - ${match.score.fullTime.away}`);
-        });
-    } catch (error) {
-        console.error('Error fetching live scores:', error);
-    }
-}
-
-fetchLiveScores();
+// Rest of your code
