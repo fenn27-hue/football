@@ -4,56 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live UK Football Scores</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #0056b3;
-        }
-        #scores {
-            margin-top: 20px;
-        }
-        .match {
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Live UK Football Scores</h1>
-    <div id="scores"></div>
+    <div class="container">
+        <header>
+            <h1>⚽ Live UK Football Scores</h1>
+            <p class="subtitle">Premier League • Championship • League One • League Two</p>
+        </header>
 
-    <script>
-        async function fetchLiveScores() {
-            try {
-                const response = await fetch('https://api.example.com/livescores'); // Hypothetical API
-                const scores = await response.json();
-                displayScores(scores);
-            } catch (error) {
-                console.error('Error fetching live scores:', error);
-                document.getElementById('scores').innerHTML = '<p>Error fetching scores.</p>';
-            }
-        }
+        <div class="filters">
+            <label for="league-filter">Filter by League:</label>
+            <select id="league-filter">
+                <option value="all">All UK Leagues</option>
+                <option value="PL">Premier League</option>
+                <option value="ELC">Championship</option>
+                <option value="EL1">League One</option>
+                <option value="EL2">League Two</option>
+            </select>
+            <span id="last-updated">Last updated: --:--</span>
+        </div>
 
-        function displayScores(scores) {
-            const scoresContainer = document.getElementById('scores');
-            scoresContainer.innerHTML = '';
-            scores.forEach(match => {
-                const matchElement = document.createElement('div');
-                matchElement.classList.add('match');
-                matchElement.innerHTML = `<strong>${match.team1}</strong> vs <strong>${match.team2}</strong> - ${match.score}`;
-                scoresContainer.appendChild(matchElement);
-            });
-        }
+        <div id="matches-container" class="matches-container">
+            <p class="loading">Loading matches...</p>
+        </div>
+    </div>
 
-        // Fetch scores every minute
-        setInterval(fetchLiveScores, 60000);
-        fetchLiveScores(); // Initial fetch
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
