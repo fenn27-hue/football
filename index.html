@@ -3,26 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Cup Qualifiers Scores</title>
-    <script>
-        const scores = [
-            { match: 'Team A vs Team B', score: '1-0' },
-            { match: 'Team C vs Team D', score: '2-2' },
-            { match: 'Team E vs Team F', score: '0-3' }
-        ];
-
-        function displayScores() {
-            const scoresList = document.getElementById('scores');
-            scores.forEach(score => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${score.match}: ${score.score}`;
-                scoresList.appendChild(listItem);
-            });
+    <title>Live World Cup Qualifier Scores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
-    </script>
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .score {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body onload="displayScores()">
-    <h1>World Cup Qualifiers Scores</h1>
-    <ul id="scores"></ul>
+<body>
+    <div class="container">
+        <h1>Live World Cup Qualifier Scores</h1>
+        <div id="scores"></div>
+    </div>
+    <script>
+        const fetchScores = async () => {
+            try {
+                const response = await fetch('https://api.football-data.org/v2/matches', {
+                    headers: { 'X-Auth-Token': '48af56b8e29d49cc826a8fceaea11954' }
+                });
+                const data = await response.json();
+                const scoresDiv = document.getElementById('scores');
+                scoresDiv.innerHTML = '';
+                data.matches.forEach(match => {
+                    scoresDiv.innerHTML += `<div class='score'>${match.homeTeam.name} vs ${match.awayTeam.name}: ${match.score.fullTime.home} - ${match.score.fullTime.away}</div>`;
+                });
+            } catch (error) {
+                console.error('Error fetching scores:', error);
+            }
+        };
+        fetchScores();
+        setInterval(fetchScores, 30000); // Refresh every 30 seconds
+    </script>
 </body>
 </html>
