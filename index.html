@@ -3,50 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>World Cup Qualifiers Scores</title>
+    <script>
+        const scores = [
+            { match: 'Team A vs Team B', score: '1-0' },
+            { match: 'Team C vs Team D', score: '2-2' },
+            { match: 'Team E vs Team F', score: '0-3' }
+        ];
+
+        function displayScores() {
+            const scoresList = document.getElementById('scores');
+            scores.forEach(score => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${score.match}: ${score.score}`;
+                scoresList.appendChild(listItem);
+            });
+        }
+    </script>
 </head>
-<body>
-    <header>
-        <h1>Football Association</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Teams</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="form-section">
-            <h2>Join the Team</h2>
-            <form>
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-        <section class="info-section">
-            <h2>Latest News</h2>
-            <article>
-                <h3>New Season Kicks Off!</h3>
-                <p>Join us for an exciting new season of football!</p>
-            </article>
-            <article>
-                <h3>Player Signings</h3>
-                <p>Check out the latest player signings!</p>
-            </article>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Football Association. All rights reserved.</p>
-    </footer>
+<body onload="displayScores()">
+    <h1>World Cup Qualifiers Scores</h1>
+    <ul id="scores"></ul>
 </body>
 </html>
