@@ -3,17 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Scores</title>
+    <title>UK Premier League - Weekend Fixtures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .match-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .match-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        .match-date {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .team {
+            flex: 1;
+            text-align: center;
+        }
+        .team-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+        .vs {
+            font-size: 0.9em;
+            color: #999;
+            font-weight: 600;
+            padding: 0 15px;
+        }
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.1em;
+        }
+        .error {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .no-matches {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
-    <!-- Other existing code -->
+    <div class="container">
+        <h1>⚽ Premier League</h1>
+        <h2 style="text-align: center; color: white; margin-bottom: 20px; font-size: 1.3em;">Weekend Fixtures</h2>
+        <div id="matches-container"></div>
+    </div>
+
     <script>
-        fetch('/api/scores') // Updated URL
-            .then(response => response.json())
-            .then(data => {
-                // Process the data
-            });
+        async function fetchMatches() {
+            const container = document.getElementById('matches-container');
+            container.innerHTML = '<div class="loading">Loading matches...</div>';
+            
+            try {
+                const response = await fetch('/api/scores');
+                if (!response.ok) throw new Error('Failed to fetch matches');
+                
+                const data = await response.json();
+                const matches = data.matches;
+                
+                if (!matches || matches.length === 0) {
+                    container.innerHTML = '<div class="no-matches">No matches scheduled for this weekend</div>';
+                    return;
+                }
+                
+                container.innerHTML = matches.map(match => {
+                    const matchDate = new Date(match.utcDate);
+                    const dateStr = matchDate.toLocaleDateString('en-GB', { 
+                        weekday: 'short', 
+                        month: 'short', 
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    return `
+                        <div class="match-card">
+                            <div class="match-date">${dateStr}</div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">${match.homeTeam.name}</div>
+                                </div>
+                                <div class="vs">vs</div>
+                                <div class="team">
+                                    <div class="team-name">${match.awayTeam.name}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                container.innerHTML = `<div class="error">Error loading matches. Please try again later.</div>`;
+            }
+        }
+        
+        // Fetch matches on page load
+        fetchMatches();
+        
+        // Refresh every 5 minutes
+        setInterval(fetchMatches, 5 * 60 * 1000);
     </script>
-    <!-- Other existing code -->
 </body>
 </html>
