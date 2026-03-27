@@ -1,32 +1,19 @@
-const https = require('https');
+const axios = require('axios');
 
-exports.handler = async (event) => {
+const getScores = async (req, res) => {
     const options = {
-        hostname: 'api.football-data.org',
-        path: event.path,
-        method: event.httpMethod,
+        method: 'GET',
+        url: 'https://api.football-data.org/v2/scores',
         headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': 'YOUR_API_TOKEN' // Replace with your football-data.org API token
+            'X-Auth-Token': process.env.FOOTBALL_API_TOKEN
         }
     };
-
-    return new Promise((resolve, reject) => {
-        const req = https.request(options, (res) => {
-            let data = '';
-
-            res.on('data', (chunk) => data += chunk);
-
-            res.on('end', () => {
-                resolve({
-                    statusCode: res.statusCode,
-                    body: data,
-                    headers: { 'Content-Type': 'application/json' }
-                });
-            });
-        });
-
-        req.on('error', (error) => reject(error));
-        req.end();
-    });
+    try {
+        const response = await axios(options);
+        res.status(200).json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
+
+module.exports = getScores;
